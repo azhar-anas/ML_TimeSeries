@@ -54,16 +54,105 @@ This dataset is structured as a **time series** in **daily units**, spanning fro
 
 ---
 
-## 📊 Results & Insights
-- (Later)
-- (Later)
-- (Later)
-- ...
+## 📊 Analysis Result
+
+### 1. Data Distribution & Outliers Analysis
+
+<p align="center">
+  <img src="assets/boxplot.png" alt="Box Plot of Commodity Prices" width="700">
+</p>
+
+> *Prices in **Papua** tend to be higher and more volatile, while in **North Sumatra** they are relatively stable. **Bali** and **Central Java** usually show lower prices, though all provinces occasionally experience sudden spikes.*
+
+### 2. Skewness and Kurtosis Analysis
+
+<p align="center">
+  <img src="assets/histogram.png" alt="Histogram of Commodity Prices" width="700">
+</p>
+
+> *In most provinces, chili prices are generally concentrated at lower levels but sometimes experience sharp jumps. **Papua** is the most prone to extreme price hikes, while **North Sumatra** shows the most balanced price distribution pattern.*
+
+### 3. Line Chart Visualization (Raw Dataset)
+
+<p align="center">
+  <img src="assets/line_chart_raw.png" alt="Raw dataset line chart of Commodity Prices" width="700">
+</p>
+
+> *Chili prices move in repeating seasonal cycles across all regions, with Papua consistently being the most expensive, Bali and Central Java showing very similar trends, then data gaps appearing in all provinces at the beginning and around July 2022 due to incomplete records from the data source.*
+
+ ### 4. `Current Time` Data Correlation
+
+<p align="center">
+  <img src="assets/pearson_correlation.png" alt="Correlation heatmap of Commodity Prices" width="700">
+</p>
+
+> *Chili prices in Indonesia display strong regional clustering with provinces in Java and Kalimantan move closely together, while Papua and North Sumatra show more independent trends. This suggests that while some markets are highly interconnected, others operate under distinct local factors.*
+
+ ### 5. Autocorrelation Function (ACF) Plot
+
+<p align="center">
+  <img src="assets/acf_plot.png" alt="ACF plot of Commodity Prices" width="700">
+</p>
+
+> Chili prices are strongly connected to their recent past, with today’s price still influenced by prices from the last few weeks, especially within about one month (25 - 40 days).
+
+ ### 6. Line Chart Forecast Result (from October 18th 2023 to December 31th 2023)
+
+<p align="center">
+  <img src="assets/forecast_result.png" alt="Forecast result of Commodity Prices" width="700">
+</p>
+
+- Bali -> MAE: 2342.19 - MSE: 8978403.24 - MAPE: 3.17%
+- Gorontalo -> MAE: 7753.80 - MSE: 280432855.08 - MAPE: 7.80%
+- Central Java -> MAE: 2780.20 - MSE: 12557093.02 - MAPE: 3.61%
+- South Kalimantan -> MAE: 4677.28 - MSE: 44698101.20 - MAPE: 5.92%
+- Papua -> MAE: 6045.75 - MSE: 95569425.45 - MAPE: 6.09%
+- North Sumatra -> MAE: 6900.77 - MSE: 71207715.69 - MAPE: 9.87%
+
+> *Overall, the model successfully generalizes the cyclical patterns across provinces, particularly in regions with stable trends (Bali, Central Java). However, for provinces with more irregular or volatile price dynamics (Gorontalo, North Sumatra), the model requires further refinement, possibly through hybrid approaches, feature enrichment, or better handling of sudden shocks.*
 
 ---
 
-## 💡Future Work
-- (Later)
-- (Later)
-- (Later)
-- ...
+## 💡 Conclution
+
+This project uses a single **MIMO LSTM** model to forecast daily retail prices of red chili pepper across six representative Indonesian provinces. The model captures repeating seasonal cycles and shared patterns across regions, but forecast accuracy varies by province due to differences in volatility and data quality.
+
+- **Highlight 1 — Seasonality:** Prices in all provinces show clear seasonal cycles and repeating ups-and-downs.  
+- **Highlight 2 — Regional clustering:** Bali, Central Java, and South Kalimantan tend to move together (high correlation), while Papua and North Sumatra behave more independently.  
+- **Highlight 3 — Model performance (MIMO LSTM):** The model performs best in **Bali** and **Central Java** (MAPE ≈ 3%), moderately in **South Kalimantan** and **Papua** (MAPE ≈ 6%), and worse in **Gorontalo** and **North Sumatra** (MAPE ≈ 8–10%).  
+- **Highlight 4 — Outliers & spikes:** All provinces show occasional extreme price spikes (outliers) that are part of real market dynamics.  
+- **Highlight 5 — Data quality:** There are missing-value gaps (notably around July 2022) and some suspicious sudden drops early in the series that need cleaning or verification.
+
+---
+
+## 🎯 Recomendation
+
+**From Highlight 1 (Seasonality):**  
+  - Farmers can schedule planting and harvesting to align with expected high-price periods.  
+  - Traders and consumers can use simple seasonal awareness (buy/store before expected peaks).
+
+**From Highlight 2 (Regional clustering):**  
+  - Regional price monitoring and logistics coordination between correlated provinces (e.g., Java ↔ Kalimantan) can help dampen local shocks.
+
+**From Highlight 3 (Model performance):**  
+  - Use the MIMO LSTM forecast as a reliable guide in provinces with low MAPE (Bali, Central Java).  
+  - For provinces with poorer accuracy (Gorontalo, North Sumatra), combine model output with local expert knowledge or add targeted monitoring.
+
+**From Highlight 4 (Outliers & spikes):**  
+  - Maintain contingency plans (buffer stocks, flexible supply routes) to handle sudden price spikes.  
+  - Present forecast intervals/uncertainty to users, not just point estimates.
+
+**From Highlight 5 (Data quality):**  
+  - Improve data collection and validation at the source (reduce missing values and obvious anomalies).  
+  - Adopt automated imputation + anomaly-detection pipelines before modeling.
+
+---
+
+## 📝 Future Work
+
+- Incorporate weather, transport/logistics costs, holiday calendars, and input-cost indices to explain sudden shocks.  
+- Experiment with a shared backbone + province-specific output heads (shared patterns + local tuning), or try attention/transformer variants.  
+- Implement prediction intervals (e.g., via quantile loss, MC-dropout, or ensemble models) so stakeholders see forecast confidence.  
+- Automated imputation (linear + spline), anomaly detection, and logging of data quality issues to reduce garbage-in/garbage-out.  
+- For provinces that remain hard to predict, consider separate local models, transfer learning from high-data provinces, or higher-frequency data if available.  
+- Build a simple dashboard for stakeholders, and set up a model performance monitor to trigger retraining when accuracy degrades.
