@@ -117,11 +117,11 @@ This dataset is structured as a **time series** in **daily units**, spanning fro
 
 This project uses a single **MIMO LSTM** model to forecast daily retail prices of red chili pepper across six representative Indonesian provinces. The model captures repeating seasonal cycles and shared patterns across regions, but forecast accuracy varies by province due to differences in volatility and data quality.
 
-- **Highlight 1 — Seasonality:** Prices in all provinces show clear seasonal cycles and repeating ups-and-downs.  
-- **Highlight 2 — Regional clustering:** Bali, Central Java, and South Kalimantan tend to move together (high correlation), while Papua and North Sumatra behave more independently.  
-- **Highlight 3 — Model performance (MIMO LSTM):** The model performs best in **Bali** and **Central Java** (MAPE ≈ 3%), moderately in **South Kalimantan** and **Papua** (MAPE ≈ 6%), and worse in **Gorontalo** and **North Sumatra** (MAPE ≈ 8–10%).  
-- **Highlight 4 — Outliers & spikes:** All provinces show occasional extreme price spikes (outliers) that are part of real market dynamics.  
-- **Highlight 5 — Data quality:** There are missing-value gaps (notably around July 2022) and some suspicious sudden drops early in the series that need cleaning or verification.
+- **Highlight 1 (Seasonality):** Prices in all provinces show clear seasonal cycles and repeating ups-and-downs.  
+- **Highlight 2 (Regional clustering):** Bali, Central Java, and South Kalimantan tend to move together (high correlation), while Papua and North Sumatra behave more independently.  
+- **Highlight 3 (MIMO LSTM model performance):** The model performs best in **Bali** and **Central Java** (MAPE ≈ 3%), moderately in **South Kalimantan** and **Papua** (MAPE ≈ 6%), and worse in **Gorontalo** and **North Sumatra** (MAPE ≈ 8–10%).  
+- **Highlight 4 (Outliers & spikes):** All provinces show occasional extreme price spikes (outliers) that are part of real market dynamics.  
+- **Highlight 5 (Data quality):** There are missing-value gaps (notably around July 2022) and some suspicious sudden drops early in the series that need cleaning or verification.
 
 ---
 
